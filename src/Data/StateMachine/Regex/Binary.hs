@@ -17,6 +17,9 @@ getNext = get <* modify succ
 
 -- wow translating regex to FSMs is actually a lot more complicated than I would
 -- have thought initially
+-- we need to think about how we will generate states. Ideally we use some
+-- mathematical formula to relate states. This means we don't need to use a
+-- state monad such as RS
 
 -- mkNFADelta :: Regex -> RS (s -> a -> [s])
 -- mkNFADelta Void = pure $ \s a -> []
