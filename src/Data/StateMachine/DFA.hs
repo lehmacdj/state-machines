@@ -1,30 +1,19 @@
-{-# LANGUAGE DeriveFunctor #-}
-
 module Data.StateMachine.DFA where
 
+import Data.StateMachine.MooreMachine
 import Data.StateMachine.Classes
 
 -- this is just Cofree ((->) a) s
-newtype DFA a s = DFA { getDFA :: (s, a -> DFA a s) }
-    deriving (Functor)
+newtype DFA a s = DFA { getDFA :: (s -> Bool, MooreMachine a s) }
 
 -- given a transition function produce a DFA
 mkDFA :: IsState s => (s -> a -> s) -> DFA a s
-mkDFA = mkDFA' initial
+mkDFA = mkDFA' initial isFinal
 
 -- generalized version of mkDFA that doesn't require an IsState constraint
-mkDFA' :: s -> (s -> a -> s) -> DFA a s
-mkDFA' initial delta = DFA (initial, transition initial)
-    where
-        transition s a =
-            let s' = delta s a
-             in DFA (s', transition s')
+mkDFA' :: s -> (s -> Bool) -> (s -> a -> s) -> DFA a s
+mkDFA' initial isFinal delta = DFA (isFinal, mkMooreMachine' initial delta)
 
--- given a DFA produce delta hat
-runDFA :: IsState s => DFA a s -> [a] -> Bool
-runDFA = runDFA' isFinal
-
--- generalized version of runDFA that doesn't require an IsState constraint
-runDFA' :: (s -> Bool) -> DFA a s -> [a] -> Bool
-runDFA' isFinal (DFA (s, delta)) [] = isFinal s
-runDFA' isFinal (DFA (s, delta)) (x:xs) = runDFA' isFinal (delta x) xs
+-- given a DFA produce delta hat for that machine
+runDFA :: DFA a s -> [a] -> Bool
+runDFA (DFA (isFinal, mm)) = runMooreMachine' isFinal mm
