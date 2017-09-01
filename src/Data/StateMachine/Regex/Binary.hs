@@ -15,6 +15,9 @@ type RegexState = Integer
 getNext :: RS RegexState
 getNext = get <* modify succ
 
+toNFA :: Regex -> NFA Bit RegexState
+toNFA Epsilon = undefined -- dependent pairs would make this quite a bit nicer...
+
 -- wow translating regex to FSMs is actually a lot more complicated than I would
 -- have thought initially
 -- we need to think about how we will generate states. Ideally we use some
