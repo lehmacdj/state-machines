@@ -16,6 +16,7 @@ cabal-version:       >=1.10
 library
   hs-source-dirs:      src
   exposed-modules:     Data.StateMachine,
+                       Data.StateMachine.MooreMachine,
                        Data.StateMachine.DFA,
                        Data.StateMachine.NFA,
                        Data.StateMachine.Regex
