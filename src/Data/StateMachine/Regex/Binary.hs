@@ -20,6 +20,7 @@ toNFA :: Regex -> NFA Bit RegexState
 toNFA Epsilon = mkNFA' 0 (==0) (\x y -> [x + 1])
 toNFA Void = mkNFA' 0 (const False) (\x y -> [])
 toNFA (Literal a) = mkNFA' 0 (==1) (\x y -> [1 | y == a])
+toNFA (Star r) = undefined
 
 -- dependent pairs would make this quite a bit nicer...
 -- , not easier but more typesafe that is
