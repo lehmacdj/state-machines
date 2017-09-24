@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeFamilies #-}
-module Data.StateMachine.Classes where
+module Data.Automata.Classes where
 
 class IsState s where
     isFinal :: s -> Bool

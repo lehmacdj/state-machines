@@ -15,11 +15,11 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Data.StateMachine,
-                       Data.StateMachine.MooreMachine,
-                       Data.StateMachine.DFA,
-                       Data.StateMachine.NFA,
-                       Data.StateMachine.Regex
+  exposed-modules:     Data.Automata,
+                       Data.Automata.MooreMachine,
+                       Data.Automata.DFA,
+                       Data.Automata.NFA,
+                       Data.Automata.Regex
   build-depends:       base >= 4.7 && < 5,
                        lens,
                        mtl,

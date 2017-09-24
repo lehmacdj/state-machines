@@ -1,6 +1,6 @@
-module Data.StateMachine.Regex where
+module Data.Automata.Regex where
 
-import Data.StateMachine.NFA
+import Data.Automata.NFA
 
 import Control.Monad.State
 
@@ -8,6 +8,11 @@ data Regex a = Epsilon | Void | Literal a
              | Star (Regex a)
              | Concat (Regex a) (Regex a)
              | Or (Regex a) (Regex a)
+
+differentiate :: Regex a -> Regex a
+differentiate Epsilon = Void
+differentiate Void = Void
+differentiate (Literal a) = Epsilon
 
 type RS = State Integer
 type RegexState = Integer
